@@ -29,48 +29,36 @@ def timing(f):
     return wrap
 
 
-'''
-def exctraction_coord(position file) :
-    atom_coord = {"coordX" : [] , "coordY" : [] , "coordZ" : []}
 
+def exctraction_coord(position_file):
+    file = open(position_file)
+    #position_file.seek(0)
+
+    atom_dico = {"atom_central" : [] , "residu" : [] , "coord_X" : [] ,
+                 "coord_Y" : [] , "coord_Z" : []}
     list_atom = []
     list_residu = []
-    X = [] , Y = [] , Z = []
-    for line in open(position file) :
+    X = []
+    Y = []
+    Z = []
+    for line in file:
         list = line.split()
         id = list[0]
         if id == 'ATOM':
             list_atom.append(list[2])
             list_residu.append(list[3])
-            X.append(float(list[5]))
-            Y.append(float(list[6]))
-            Z.append(float(list[7]))
-'''
+            X.append(float(list[6]))
+            Y.append(float(list[7]))
+            Z.append(float(list[8]))
+    atom_dico['atom_central'] = list_atom
+    atom_dico['residu'] = list_residu
+    atom_dico['coord_X'] = X
+    atom_dico['coord_Y'] = Y
+    atom_dico['coord_Z'] = Z
 
+    coord_dataframe = pd.DataFrame(atom_dico)
+    return coord_dataframe
 
-#Fonction brut
-#TODO : Création d'une fonction pour cette partie
-atom_coord = {"atom_central" : [] , "residu" : [] , "coord_X" : [] ,
-             "coord_Y" : [] , "coord_Z" : []}
-list_atom = []
-list_residu = []
-X = []
-Y = []
-Z = []
-for line in open('3i40.pdb'):
-    list = line.split()
-    id = list[0]
-    if id == 'ATOM':
-        list_atom.append(list[2])
-        list_residu.append(list[3])
-        X.append(float(list[6]))
-        Y.append(float(list[7]))
-        Z.append(float(list[8]))
-
-atom_coord['atom_central'] = list_atom
-atom_coord['residu'] = list_residu
-atom_coord['coord_X'] = X
-atom_coord['coord_Y'] = Y
-atom_coord['coord_Z'] = Z
-
-data = pd.DataFrame(atom_coord)
+if __name__ == '__main__' :
+    data = exctraction_coord('3i40.pdb')
+    print(data)
