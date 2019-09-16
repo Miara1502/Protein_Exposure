@@ -85,6 +85,12 @@ def translocation(Atom , n):
 
     return sphere
 
+def calcule_distance_carre(point , atom):
+    """Return the distance between one point on a sphere and other atom
+    """
+    dist = (atom['coord_X'] - point['X'])**2 + (atom['coord_Y'] - point['Y'])**2 + (atom['coord_Z'] - point['Z'])**2
+    return math.sqrt(dist)
+
 
 if __name__ == '__main__' :
 
@@ -93,8 +99,13 @@ if __name__ == '__main__' :
 
 
     atom1 = data.iloc[1]
+    atom2 = data.iloc[2]
+
     print(atom1['coord_X'])
 
     #translocation pour l'atome 01
-    nouv1 = translocation(atom1, 1000)
-    print(nouv1)
+    sphere_atom1 = translocation(atom1, 20)
+    print(sphere_atom1)
+
+    distance = calcule_distance_carre(sphere_atom1.iloc[0], atom2)
+    print(distance)
