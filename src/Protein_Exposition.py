@@ -108,7 +108,8 @@ def distance_all_atom2(sphere , coord_dataframe):
     dico = {}
     for point in sphere.index :
         list_distance = []
-        for i in range(10) :
+
+        for i in range(len(coord_dataframe)) :
             distance = calcule_distance_carre(sphere.iloc[point] , coord_dataframe.iloc[i])
             list_distance.append(distance)
 
@@ -128,7 +129,7 @@ if __name__ == '__main__' :
 
     ##################################EXEMPLE POUR UNE SPHERE/ ATOM #######################
     #translocation pour l'atome 01
-    sphere_atom1 = translocation(atom1, 20)
+    sphere_atom1 = translocation(atom1, 1000) #N: Nuage de points de la sphère
 
 
     print('\n')
