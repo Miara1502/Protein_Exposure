@@ -89,7 +89,32 @@ def calcule_distance_carre(point , atom):
     """Return the distance between one point on a sphere and other atom
     """
     dist = (atom['coord_X'] - point['X'])**2 + (atom['coord_Y'] - point['Y'])**2 + (atom['coord_Z'] - point['Z'])**2
-    return math.sqrt(dist)
+    return dist #math.sqrt(dist) pour la racine carré
+
+
+def distance_all_atom2(sphere , coord_dataframe):
+    """Return the distance of each point on the sphere with all the atoms inside the pdb
+
+        1) Calcul de la distance entre un point de la sphère et tous les atoms
+
+        2) Création d'un dictionnaire qui va contenir toutes les distances pour chaque atome
+            dic = {'index_sphere_points' : list_distance avec tous les autres atoms}
+
+    """
+    #TODO : - Fixer un seuil : seuil = dist(H20) + rayon de l'atom
+    #       - calculer la distancer d'un point avec tous les atoms
+    #       - même principe pour tous les autres points d'un nuage
+
+    dico = {}
+    for point in sphere.index :
+        list_distance = []
+        for i in range(10) :
+            distance = calcule_distance_carre(sphere.iloc[point] , coord_dataframe.iloc[i])
+            list_distance.append(distance)
+
+        dico[point] = list_distance
+
+    return dico
 
 
 if __name__ == '__main__' :
@@ -101,11 +126,35 @@ if __name__ == '__main__' :
     atom1 = data.iloc[1]
     atom2 = data.iloc[2]
 
-    print(atom1['coord_X'])
-
+    ##################################EXEMPLE POUR UNE SPHERE/ ATOM #######################
     #translocation pour l'atome 01
     sphere_atom1 = translocation(atom1, 20)
-    print(sphere_atom1)
 
-    distance = calcule_distance_carre(sphere_atom1.iloc[0], atom2)
-    print(distance)
+
+    print('\n')
+    dist_sphere1  = distance_all_atom2(sphere_atom1 , data)
+    #print(dist_sphere1)
+    test = pd.DataFrame(dist_sphere1)
+    print(test)
+
+
+
+##########################################################################################
+# FONCTION OBSOLETE /
+'''
+def distance_all_atom(sphere_point , coord_dataframe):
+    #Un seul point avec tous les atoms  :
+
+
+    #TODO : - Fixer un seuil : seuil = dist(H20) + rayon de l'atom
+    #       - calculer la distancer d'un point avec tous les atoms
+    #       - même principe pour tous les autres points d'un nuage
+
+    list_distance = []
+
+    for i in range(20) : #len(coord_dataframe)
+        distance = calcule_distance_carre(sphere_point, coord_dataframe.iloc[i])
+        list_distance.append(distance)
+
+    return list_distance
+'''
