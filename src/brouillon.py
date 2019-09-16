@@ -1,32 +1,77 @@
-##https://www.google.com/search?client=ubuntu&hs=Byf&channel=fs&sxsrf=ACYBGNTmqXGBk-U3z2ZqLlMn-egSmtfW6A%3A1568108983867&ei=t3F3XbfGNMLjgwft9rLoDg&q=algorithme+de+Saff+et+Kuijlaars&oq=algorithme+de+Saff+et+Kuijlaars&gs_l=psy-ab.3...2785.6189..6339...3.0..0.70.552.11......0....1..gws-wiz.......35i304i39.HpSgAim22qA&ved=0ahUKEwj3_c6X_cXkAhXC8eAKHW27DO0Q4dUDCAs&uact=5
+# -*- coding: utf-8  -*-
 
-> cat ll.py
-from math import asin
-nx = 4; ny = 5
-for x in range(nx):
-    lon = 360 * ((x+0.5) / nx)
-    for y in range(ny):                                                         
-        midpt = (y+0.5) / ny                                                    
-        lat = 180 * asin(2*((y+0.5)/ny-0.5))                                    
-        print lon,lat                                                           
-> python2.7 ll.py        
-                                              
-45.0 -166.91313924                                                              
-45.0 -74.0730322921                                                             
-45.0 0.0                                                                        
-45.0 74.0730322921                                                              
-45.0 166.91313924                                                               
-135.0 -166.91313924                                                             
-135.0 -74.0730322921                                                            
-135.0 0.0                                                                       
-135.0 74.0730322921                                                             
-135.0 166.91313924                                                              
-225.0 -166.91313924                                                             
-225.0 -74.0730322921                                                            
-225.0 0.0                                                                       
-225.0 74.0730322921                                                             
-225.0 166.91313924
-315.0 -166.91313924
-315.0 -74.0730322921
-315.0 0.0
-315.0 74.0730322921
+"""Module with all the function that we need for Surface.solvant.py.
+"""
+
+import math
+import time
+import numpy as np
+import scipy
+import pandas as pd
+
+from scipy.spatial import distance_matrix
+import pprint
+
+## Nice wrapper to time functions. Works as a decorator.
+# Taken from https://stackoverflow.com/questions/5478351/python-time-measure-function
+def timing(f):
+
+    """Nice wrapper to time functions. Works as a decorator.
+    Taken from https://stackoverflow.com/questions/5478351/python-time-measure-function
+    """
+
+    def wrap(*args):
+        time1 = time.time()
+        ret = f(*args)
+        time2 = time.time()
+        print('{:s} function took {:.3f} ms'.format(f.__name__, (time2-time1)*1000.0))
+        return ret
+    return wrap
+
+atom_coord = {"atom_central" : [] , "residu" : [] , "coord_X" : [] ,
+             "coord_Y" : [] , "coord_Z" : []}
+list_atom = []
+list_residu = []
+X = []
+Y = []
+Z = []
+for line in open('3i40.pdb'):
+    list = line.split()
+    id = list[0]
+    if id == 'ATOM':
+        list_atom.append(list[2])
+        list_residu.append(list[3])
+        X.append(float(list[6]))
+        Y.append(float(list[7]))
+        Z.append(float(list[8]))
+
+atom_coord['atom_central'] = list_atom
+atom_coord['residu'] = list_residu
+atom_coord['coord_X'] = X
+atom_coord['coord_Y'] = Y
+atom_coord['coord_Z'] = Z
+
+data = pd.DataFrame(atom_coord)
+
+
+import numpy
+
+n = 100
+
+golden_angle = numpy.pi * (3 - numpy.sqrt(5))
+theta = golden_angle * numpy.arange(n)
+z = numpy.linspace(1 - 1.0 / n, 1.0 / n - 1, n)
+print(z)
+radius = numpy.sqrt(1 - z * z)
+
+points = numpy.zeros((n, 3))
+points[:,0] = radius * numpy.cos(theta)
+points[:,1] = radius * numpy.sin(theta)
+points[:,2] = z
+
+#translocations :
+#Generer une sphère1 :
+sphere1 = golden_sphere(100)
+
+
+#
