@@ -90,12 +90,11 @@ if __name__ == '__main__' :
 
     data = exctraction_coord('3i40.pdb')
     print(data)
-    print(data['Atom_name'])
 
 
     atom1 = data.iloc[1]
     print(atom1['coord_X'])
 
     #translocation pour l'atome 01
-    nouv1 = translocation(atom1, 10)
+    nouv1 = translocation(atom1, 1000)
     print(nouv1)
