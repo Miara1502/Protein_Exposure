@@ -1,6 +1,7 @@
 # -*- coding: utf-8  -*-
 
-"""Module with all the function that we need for Surface.solvant.py.
+"""Module qui contient touts les fonctions utilisés pour le projet : Calcul de la Surface
+exposé au solvant d'une protéine
 """
 
 import math
@@ -16,8 +17,9 @@ import pprint
 # Taken from https://stackoverflow.com/questions/5478351/python-time-measure-function
 
 def exctraction_coord(pdb_file):
-    """Get a PDB file and return a Pandas Dataframe of x , y, z coordinates ,
-    name and residu for each atomes.
+    """Lis un fichier PDB (type = str) et retourne un Pandas DataFrame qui contient
+    les coordonnées de chaque atome , leurs nom ainsi que leur résidus
+
     """
 
     filin = open(pdb_file)
@@ -51,7 +53,7 @@ def exctraction_coord(pdb_file):
     return coord_dataframe
 
 def golden_sphere(n):
-    """create a sphere with n points
+    """Crée un nuage de point dstribué dans une sphère / Algortihm Golden Spirale
     """
     golden_angle = np.pi * (3 - np.sqrt(5))
     theta = golden_angle * np.arange(n)
@@ -69,9 +71,13 @@ def golden_sphere(n):
 
 
 def translocation(Atom , n):
-    """translocate a sphere for one atom
+    """Translocation d'une sphere pour un atom en utilisant l'atome comme origine de la sphère (1)
+        - Créer une sphère avec la fonction Golden_sphere
+        - Créer un dictionnaire contenant le radius de chaque atome dans le fichier PDB
+        - Translocation de la sphère
+        - N : Correspond au nombre de nuage de points qu'on souhaite générer
     """
-    sphere = golden_sphere(n)
+    nouvelle_sphere = golden_sphere(n)
     #print(sphere)
 
     dico_rayon = {'H':1.2,'C':1.7,'N':1.55,'O':1.52,'F':1.47,'S':1.8}
@@ -79,21 +85,26 @@ def translocation(Atom , n):
         if(Atom['Atom_name'] == atom) :
             rayon = r
             #print(rayon)
-            sphere['X'] = (sphere['X'] + Atom['coord_X'])*rayon
-            sphere['Y'] = (sphere['Y'] + Atom['coord_Y'])*rayon
-            sphere['Z'] = (sphere['Z'] + Atom['coord_Z'])*rayon
+            nouvelle_sphere['X'] = (nouvelle_sphere['X'] + Atom['coord_X'])*rayon
+            nouvelle_sphere['Y'] = (nouvelle_sphere['Y'] + Atom['coord_Y'])*rayon
+            nouvelle_sphere['Z'] = (nouvelle_sphere['Z'] + Atom['coord_Z'])*rayon
 
-    return sphere
+    return nouvelle_sphere
 
 def calcule_distance_carre(point , atom):
-    """Return the distance between one point on a sphere and other atom
+    """Calcule la distance entre un point d'une sphère et un atom dans le fichier PDB
+    Attention : LES VALEURS SONT ENCORE AU CARRE !!!!
+    Il faut rajouter math.sqrt()
     """
-    dist = (atom['coord_X'] - point['X'])**2 + (atom['coord_Y'] - point['Y'])**2 + (atom['coord_Z'] - point['Z'])**2
-    return dist #math.sqrt(dist) pour la racine carré
+    distance = (atom['coord_X'] - point['X'])**2 + (atom['coord_Y'] - point['Y'])**2 + (atom['coord_Z'] - point['Z'])**2
+    return distance #math.sqrt(dist) pour la racine carré
 
 
-def distance_all_atom2(sphere , coord_dataframe):
-    """Return the distance of each point on the sphere with all the atoms inside the pdb
+def distance_all_atom(sphere , coord_dataframe):
+    """ Calcule la distance entre un point et les atoms dans le fichier PDB , pour
+    chaque point contenu dans la sphère , en utilisant le DataFrame de la sphère (translocation)
+    qui correspond à un atome et le DataFrame contenant les coordonnées de tous les atom.
+    Puis les stockent dans un dictionnaire ayant le numéro d'un point de la sphère comme index
 
         1) Calcul de la distance entre un point de la sphère et tous les atoms
 
