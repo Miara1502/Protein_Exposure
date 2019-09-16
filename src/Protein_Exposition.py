@@ -68,24 +68,21 @@ def golden_sphere(n):
     return sphere
 
 
-def translocation(Atom , sphere):
+def translocation(Atom , n):
     """Create a sphere for each atoms with n number of points
     """
-    sphere_nouv = sphere
-    #TODO : Create a dictionnary for all the atom
+    sphere = golden_sphere(n)
+
     dico_rayon = {'H':1.2,'C':1.7,'N':1.55,'O':1.52,'F':1.47,'S':1.8}
     for i , (atom, r) in enumerate(dico_rayon.items()):
         if(Atom['Atom_name'] == atom) :
             rayon = r
 
-            sphere_nouv['X'] = (sphere['X'] + Atom['coord_X'])*rayon
-            sphere_nouv['Y'] = (sphere['Y'] + Atom['coord_Y'])*rayon
-            sphere_nouv['Z'] = (sphere['Z'] + Atom['coord_Z'])*rayon
+            sphere['X'] = (sphere['X'] + Atom['coord_X'])*rayon
+            sphere['Y'] = (sphere['Y'] + Atom['coord_Y'])*rayon
+            sphere['Z'] = (sphere['Z'] + Atom['coord_Z'])*rayon
 
-
-    print(rayon)
-
-    return sphere_nouv
+    return sphere
 
 
 if __name__ == '__main__' :
@@ -94,14 +91,18 @@ if __name__ == '__main__' :
     print(data)
     print(data['Atom_name'])
 
-    s1 = golden_sphere(10)
-    print(s1)
+    atom7 = data.iloc[7]
+    atom0 = data.iloc[0]
 
-    atom1 = data.iloc[0]
-    print(atom1['coord_X'])
+    atom1 = data.iloc[1]
 
     print('Je suis làa')
 
-    nouv = translocation(atom1 , s1)
+    nouv1 = translocation(atom0 , 10)
+    nouv2 = translocation(atom7, 10)
+    print(nouv2)
+    nouv3 = translocation(atom1, 10)
+    print(nouv3)
+    nouv2 = translocation(atom7, 10)
 
-    print(nouv)
+    print(nouv2)
