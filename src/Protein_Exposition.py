@@ -147,9 +147,22 @@ def EXPOSITION(distance_dataframe , Atom):
     #3) Calcul de la surface exposé :
     return ratio*surface
 
+
+def Surface(Atom) :
+    rayon = 0
+    dico_rayon = {'H':1.2,'C':1.8,'N':1.5,'O':1.4,'F':1.47,'S':1.8}
+    for i , (atom, r) in enumerate(dico_rayon.items()):
+        if(Atom['Atom_name'] == atom) :
+            rayon = r
+    surface = 4*math.pi*((rayon)**2)
+    return surface
+
+
+
 def protocol(coord_dataframe , nbr_point):
 
     dico = {}
+    list_surface = []
     for atom_number in range(len(coord_dataframe)) :
         atom = coord_dataframe.iloc[atom_number]
         sphere = translocation(atom , nbr_point)
@@ -157,12 +170,16 @@ def protocol(coord_dataframe , nbr_point):
         expo = EXPOSITION(distance_atom , atom)
         dico[atom_number] = expo
 
+        s = Surface(coord_dataframe.iloc[atom_number])
+        list_surface.append(s)
+
     list = []
     for i , j in enumerate(dico.items()) :
         valeur =  j[1]
         list.append(valeur)
 
     coord_dataframe['exposition'] = list
+    coord_dataframe['surface'] = list_surface
 
     return coord_dataframe
 
