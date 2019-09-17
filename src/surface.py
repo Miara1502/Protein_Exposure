@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-""" # TODO the program is not doing that, but it is OK for the moment. (to improve the description later).
+""" # TODO Write a dockstrings 
 
 import argparse
 import pandas as pd
