@@ -19,6 +19,10 @@ parser.add_argument("-p", "--positions-file", type= str,
 
 parser.add_argument("-n", "--nb-points", help="Select the number of points for each sphere --DEFAULT = 10",
                     type=int, default=10, dest="nPoint", metavar="noGenes")
+parser.add_argument("outfile", nargs='?', default="-", metavar='html_file',
+                    help="Path to the outputfile of the 3D_Visualization (or STDOUT). / must be a .html file")
+
+
 args = parser.parse_args()
 
 coord = PE.exctraction_coord(args.atomPos)
