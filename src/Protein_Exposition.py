@@ -184,7 +184,7 @@ def protocol(coord_dataframe , nbr_point):
     return coord_dataframe
 
 
-
+"""
 if __name__ == '__main__' :
 
     data = exctraction_coord('test.pdb')
@@ -192,7 +192,7 @@ if __name__ == '__main__' :
     print('\n')
     A = protocol(data , 10)
     print(A)
-
+"""
 
 
 
