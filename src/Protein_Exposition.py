@@ -80,14 +80,11 @@ def translocation(Atom , n):
     nouvelle_sphere = golden_sphere(n)
     #print(sphere)
 
-    dico_rayon = {'H':1.2,'C':1.7,'N':1.55,'O':1.52,'F':1.47,'S':1.8}
-    for i , (atom, r) in enumerate(dico_rayon.items()):
-        if(Atom['Atom_name'] == atom) :
-            rayon = r
-            #print(rayon)
-            nouvelle_sphere['X'] = (nouvelle_sphere['X'] + Atom['coord_X'])*rayon
-            nouvelle_sphere['Y'] = (nouvelle_sphere['Y'] + Atom['coord_Y'])*rayon
-            nouvelle_sphere['Z'] = (nouvelle_sphere['Z'] + Atom['coord_Z'])*rayon
+    #dico_rayon = {'H':1.2,'C':1.7,'N':1.55,'O':1.52,'F':1.47,'S':1.8}
+    #print(rayon)
+    nouvelle_sphere['X'] = nouvelle_sphere['X'] + Atom['coord_X']
+    nouvelle_sphere['Y'] = nouvelle_sphere['Y'] + Atom['coord_Y']
+    nouvelle_sphere['Z'] = nouvelle_sphere['Z'] + Atom['coord_Z']
 
     return nouvelle_sphere
 
@@ -110,20 +107,67 @@ def distance_all_point(sphere , atom):
 
     return list_distance
 
+def distance_all_atom(sphere , coord_dataframe):
+    """ Calcule la distance entre tous les points de la sphere et tous  les atoms dans le fichier PDB
+    retourne un dictionnaire ayant comme clé l'indice d'un atom et comme valeur une liste de distance
+    avec tous les points de la sphère puis la transforme en data frame
+    """
 
-def nbr_expose(distance_dataframe) :
+    dico = {}
+    for ind_atom in range(len(coord_dataframe)) :
+        dico[ind_atom] = distance_all_point(sphere , coord_dataframe.iloc[ind_atom])
+
+    dico_df = pd.DataFrame(dico)
+    return dico_df
+
+def ratio_expose(distance_dataframe) :
     """ Booléen qui return TRUE si la distance entre un point et un atom est
     inférieur au seuil (cutoff) qui correspond à la somme du diamètre d'une Molécule
     d'eau et le rayon de l'atom
     """
+    #dico_rayon = {'H':1.2,'C':1.7,'N':1.55,'O':1.52,'F':1.47,'S':1.8}
     #TODO : fixer la valeur du cutoff , puis comparer avec les distance de tous les atomes
     #       Comment déterminer le rayon qu'on ajoute au seuil
-    """seuil = 3.4
-    for i in
-    if distance"""
-    return True
+    count = 0
+    for i in range(len(distance_dataframe)):
+        for j in range(len(distance_dataframe.iloc[i])):
+            #print(i, j)
+            if((distance_dataframe.iloc[i][j]) > 4):
+                count = count + 1
+    ratio = count/(distance_dataframe.shape[0]*distance_dataframe.shape[1])
+    return ratio
 
-#def dico_all_distance() :
+def surface_sphere(Atom):
+    """Caclul la surface d'un atom
+    """
+    rayon = 0
+    dico_rayon = {'H':1.2,'C':1.8,'N':1.5,'O':1.4,'F':1.47,'S':1.8}
+    for i , (atom, r) in enumerate(dico_rayon.items()):
+        if(Atom['Atom_name'] == atom) :
+            rayon = r
+
+    surface = 4*math.pi*((rayon)**2)
+    return surface
+
+def exposition(ratio , surface):
+    """Permet de calculer la surface exposé au solvant de l'atome
+    """
+    return(ratio*surface)
+
+
+def EXPOSITION(distance_dataframe , Atom):
+
+    #1 CALCUL DE LA SURFACE
+    rayon = 0
+    dico_rayon = {'H':1.2,'C':1.8,'N':1.5,'O':1.4,'F':1.47,'S':1.8}
+    for i , (atom, r) in enumerate(dico_rayon.items()):
+        if(Atom['Atom_name'] == atom) :
+            rayon = r
+    surface = 4*math.pi*((rayon)**2)
+
+    #2) Calcul du ratio exposé :
+    return surface
+
 
 if __name__ == '__main__' :
 
@@ -136,11 +180,28 @@ if __name__ == '__main__' :
 
     ##################################EXEMPLE POUR UNE SPHERE/ ATOM #######################
     #translocation pour l'atome 01
-    sphere_atom1 = translocation(atom1, 1000) #N: Nuage de points de la sphère
+    sphere_atom1 = translocation(atom1, 100) #N: Nuage de points de la sphère
 
     res = distance_all_point(sphere_atom1 , atom2)
     print('la distance entre la sphere 1 et l atom2 est : \n')
-    print(min(res))
+    #print(res)
+
+    resultat = distance_all_atom(sphere_atom1 , data)
+    #print(resultat)
+    #print(resultat.iloc[1][0])
+
+    print(resultat)
+    ratio = ratio_expose(resultat)
+    print(ratio)
+
+    test = surface_sphere(atom1)
+    print(test)
+
+    exp = exposition(ratio , test)
+    print(exp)
+
+
+    ########################################################################################
 
 
 
