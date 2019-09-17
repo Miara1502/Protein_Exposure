@@ -140,7 +140,8 @@ def EXPOSITION(distance_dataframe , Atom):
     for i in range(len(distance_dataframe)):
         for j in range(len(distance_dataframe.iloc[i])):
             #print(i, j)
-            if((distance_dataframe.iloc[i][j]) > seuil):
+            if((distance_dataframe.iloc[i][j]) >= seuil):
+                #Essayer de mettre une limite pour ne pas calculer toutes les distances
                 count = count + 1
     ratio = count/(distance_dataframe.shape[0]*distance_dataframe.shape[1])
 
