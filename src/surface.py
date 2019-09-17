@@ -16,13 +16,13 @@ parser = argparse.ArgumentParser(description="Surface exposition , main program.
 parser.add_argument("-p", "--positions-file", type= str,
                     help='Path to the file containing the x, y, z coordinates of atoms',
                     dest="atomPos", metavar="atom_position_file")
-#parser.add_argument("-e", "--geneExpression-file", type=argparse.FileType('r'), help='path to the file containing the gene expression ', dest="geneExpr", metavar="gene_expression_file")
-#parser.add_argument("outfile", nargs='?', default="-", metavar='html_file', help="Path to the outputfile of the 3D_Visualization (or STDOUT). / must be a .html file")
-#parser.add_argument("-n", "--nb-genes", help="Select the number of the closest genes --DEFAULT = 10", type=int, default=10, dest="nGenes", metavar="noGenes")
-#parser.add_argument("-c", "--method-correlation", help="Select the methode of correlation --DEFAULT = 'pearson'", type=str, default='pearson', dest="mCorr", metavar="methode_correlation")
+
+parser.add_argument("-n", "--nb-points", help="Select the number of points for each sphere --DEFAULT = 10",
+                    type=int, default=10, dest="nPoint", metavar="noGenes")
 args = parser.parse_args()
 
 coord = PE.exctraction_coord(args.atomPos)
-
-
 print(coord)
+print('\n')
+resultat = PE.protocol(coord,agrs.npoint)
+print(resultat)
