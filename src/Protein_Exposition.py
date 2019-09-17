@@ -179,7 +179,7 @@ def protocol(coord_dataframe , nbr_point):
         list.append(valeur)
 
     coord_dataframe['exposition'] = list
-    coord_dataframe['surface'] = list_surface
+    coord_dataframe['surface_atom'] = list_surface
 
     return coord_dataframe
 
@@ -189,37 +189,10 @@ if __name__ == '__main__' :
 
     data = exctraction_coord('test.pdb')
     print(data)
-
-
-    atom1 = data.iloc[0] #atom1
-    atom2 = data.iloc[2] #atom3
-
-    ##################################EXEMPLE POUR UNE SPHERE/ ATOM #######################
-    #translocation pour l'atome 01
-    sphere_atom1 = translocation(atom1, 10) #N: Nuage de points de la sphère
-
-    Matrix_atom1 = distance_all_atom(sphere_atom1 , data)
-    #print(Matrix_atom1)
-
-    expo1 = EXPOSITION(Matrix_atom1, atom1)
-    print('exposition de l atom 0 : ')
-    print(expo1)
-
     print('\n')
-    sphere_atom2 = translocation(atom2, 10) #N: Nuage de points de la sphère
-
-    Matrix_atom2 = distance_all_atom(sphere_atom2 , data)
-    #print(Matrix_atom2)
-
-    expo2 = EXPOSITION(Matrix_atom2, atom2)
-    print('exposition de l atom 2 : ')
-    print(expo2)
-
-
-    ########################################################################################
-    #test sur tous les atoms :
     A = protocol(data , 10)
     print(A)
+
 
 
 
