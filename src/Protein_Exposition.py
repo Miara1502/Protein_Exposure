@@ -134,11 +134,6 @@ def EXPOSITION(distance_dataframe , Atom):
             rayon = r
     surface = 4*math.pi*((rayon)**2)
 
-    #print('la surface est : ')
-    #print(surface)
-    #print('le rayon est : ')
-    #print(rayon)
-
     #2) Calcul du ratio exposé :  #Si DISTANCE > seuil => Point exposé
     count = 0
     seuil = 2.8 + rayon
@@ -162,13 +157,20 @@ def protocol(coord_dataframe , nbr_point):
         expo = EXPOSITION(distance_atom , atom)
         dico[atom_number] = expo
 
-    return dico
+    list = []
+    for i , j in enumerate(dico.items()) :
+        valeur =  j[1]
+        list.append(valeur)
+
+    coord_dataframe['exposition'] = list
+
+    return coord_dataframe
 
 
 
 if __name__ == '__main__' :
 
-    data = exctraction_coord('CD59_2J8B.pdb')
+    data = exctraction_coord('test.pdb')
     print(data)
 
 
@@ -201,6 +203,7 @@ if __name__ == '__main__' :
     #test sur tous les atoms :
     A = protocol(data , 10)
     print(A)
+
 
 
 
