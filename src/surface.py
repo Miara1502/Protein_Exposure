@@ -19,14 +19,13 @@ parser.add_argument("-p", "--positions-file", type= str,
 
 parser.add_argument("-n", "--nb-points", help="Select the number of points for each sphere --DEFAULT = 10",
                     type=int, default=10, dest="nPoint", metavar="noGenes")
-parser.add_argument("outfile", nargs='?', default="-", metavar='html_file',
-                    help="Path to the outputfile of the 3D_Visualization (or STDOUT). / must be a .html file")
+parser.add_argument("outfile", nargs='?', default="-", metavar='filename.txt',
+                    help="Create a file to put the result of the program ex: > filename.txt ( or STDOUT). / must be a .text file")
 
 
 args = parser.parse_args()
 
 coord = PE.exctraction_coord(args.atomPos)
-print(coord)
-print('\n')
+
 resultat = PE.protocol(coord,args.nPoint)
 print(resultat)
