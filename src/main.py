@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
 
 """
-""" # TODO Write a dockstrings
-
-import argparse
-import pandas as pd
+Main qui va générer les résultats à partir d'un fichier pdb en utilisant les fonctions
+du module Protein_Expsition.py
+"""
 
 import Protein_Exposition as PE
 
+import argparse
 import sys
-import pprint
 
 parser = argparse.ArgumentParser(description="Surface exposition , main program.")
 # Positionnal argument containing the 3D coordinate of genes
 parser.add_argument("-p", "--positions-file", type= str,
-                    help='Path to the file containing the x, y, z coordinates of atoms',
+                    help='Lien vers le fichier PDB contenant les coordonnes x , y , z des atoms de la Proteine',
                     dest="atomPos", metavar="atom_position_file")
-
-parser.add_argument("-n", "--nb-points", help="Select the number of points for each sphere --DEFAULT = 10",
+parser.add_argument("-n", "--nb-points", help="Selectionner le nombre de points pour chaque sphere --DEFAULT = 10",
                     type=int, default=10, dest="nPoint", metavar="noGenes")
 parser.add_argument("outfile", nargs='?', default="-", metavar='filename.txt',
-                    help="Create a file to put the result of the program ex: > filename.txt ( or STDOUT). / must be a .text file")
+                    help="Va générer les résultats du programme dans un fichier .txt , ex : > filename.txt ( or STDOUT). / doit etre un fichier.txt")
+
 
 
 args = parser.parse_args()
