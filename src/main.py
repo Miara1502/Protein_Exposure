@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-""" # TODO Write a dockstrings 
+""" # TODO Write a dockstrings
 
 import argparse
 import pandas as pd
@@ -27,5 +27,5 @@ args = parser.parse_args()
 
 coord = PE.exctraction_coord(args.atomPos)
 
-resultat = PE.protocol(coord,args.nPoint)
+resultat = PE.Exposition_All(coord,args.nPoint)
 print(resultat)
