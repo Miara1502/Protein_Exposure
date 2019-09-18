@@ -130,6 +130,8 @@ def EXPOSITION(distance_dataframe , Atom , seuil_distance):
 
 
 def Surface(Atom) :
+    """Renvoie la surface d'une sphère/atom
+    """
     rayon = 0
     dico_rayon = {'H':1.2,'C':1.8,'N':1.5,'O':1.4,'F':1.47,'S':1.8}
     for i , (atom, r) in enumerate(dico_rayon.items()):
@@ -141,7 +143,13 @@ def Surface(Atom) :
 
 
 def Exposition_All(coord_dataframe , nbr_point , seuil_distance):
-
+    """Renvoie une liste contenant la surface exposé au solvant pour tous les atomes
+    de la pdb en utilisant les fonctions de la manière suivante :
+    1) Selection d'un atome
+    2) Création d'une sphère puis Translocation
+    3) Calcul des différentes distances avec tous les atoms du pdb
+    4) Calcul de la surface exposé de l'atome 
+    """
     dico = {}
     list_surface = []
     for atom_number in range(len(coord_dataframe)) :
