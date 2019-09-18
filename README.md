@@ -52,9 +52,15 @@ Pour Lancer le programme, utiliser la ligne de commande suivante:
 
 ## Exemple d'usage : 
 
-Placez vous dans le répertoire Protein_Exposure et tapez la lgne de commande suivante pour lancer le programme sur un fichier pdb contenant 100_atom , avec un nuage de points de 10 distribués en sphère avec une distance max = 6 comme limite de calcul entre 2 atomes : 
+Placez vous dans le répertoire Protein_Exposure et tapez la ligne de commande suivante pour lancer le programme sur un fichier pdb contenant 100_atom , avec un nuage de points de 10 distribués en sphère avec une distance max = 6 comme limite de calcul entre 2 atomes : 
 
 	$python3 src/main.py -p data/100_atom.pdb -n 10 -d 6
+
+Autre exemple , pour le pdb 3i40.pdb : 
+
+	$python3 src/main.py -p data/3i40.pdb -n 10 -d 6
+
+Warning : pour le fichier 3i40.pdb , les calculs peuvent durer jusqu'à 8mn , voir rapport , pour plus de détail 
 
 
  
