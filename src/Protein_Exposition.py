@@ -148,7 +148,7 @@ def Exposition_All(coord_dataframe , nbr_point , seuil_distance):
     1) Selection d'un atome
     2) Création d'une sphère puis Translocation
     3) Calcul des différentes distances avec tous les atoms du pdb
-    4) Calcul de la surface exposé de l'atome 
+    4) Calcul de la surface exposé de l'atome
     """
     dico = {}
     list_surface = []
@@ -169,7 +169,11 @@ def Exposition_All(coord_dataframe , nbr_point , seuil_distance):
 
     coord_dataframe['exposition'] = list
     coord_dataframe['surface_atom'] = list_surface
+    coord_dataframe = coord_dataframe.drop(columns="Atom_name")
 
     return coord_dataframe
 
-#       - Faire le même calcul pour tous les atoms
+def print_full(x):
+    pd.set_option('display.max_rows', len(x))
+    print(x)
+    pd.reset_option('display.max_rows')

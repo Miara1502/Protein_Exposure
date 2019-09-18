@@ -29,4 +29,4 @@ args = parser.parse_args()
 coord = PE.exctraction_coord(args.atomPos)
 
 resultat = PE.Exposition_All(coord,args.nPoint , args.dMax)
-print(resultat)
+print(PE.print_full(resultat))
