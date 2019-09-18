@@ -1,6 +1,6 @@
 # Exposition d'une protéine au solvant
+Miara Rakotomavo : 
 
-Proteine_Exposure_Miara
 Description : 
 
 Un programme ptyhon qui permet de calculer la surface exposée au solvant des atomes d'une protéine.
@@ -34,7 +34,7 @@ Ce script sera utilisé pour:
 	stocker les résultats dans un Pandas Data Frame.
 main.py
 
-	Ceci est le script principal (main) du programme , celui qui va être lancé, 	pour procéder à toutes les étapes de calcul à partir des modules du script 		précedent.
+	Ceci est le script principal (main) du programme , celui qui va être lancé, pour procéder à toutes les étapes de calcul à partir des modules du script précedent.
 
 Usage : 
 
@@ -49,7 +49,7 @@ ou le télécharger
 $python3 src/main.py -p data/pdb_file.pdb -n Nuage_de_point -d distance_limite
 
 Exemple d'usage : 
-Placez vous dans le répertoire Protein_Exposure et tapez la lgne de commande suivante pour lancer le programm sur un fichier pdb contenant 100_atom , avec un nuage de points de 10 distribués en sphère avec une distance max = 6 comme limite de calcul entre 2 atomes : 
+Placez vous dans le répertoire Protein_Exposure et tapez la lgne de commande suivante pour lancer le programme sur un fichier pdb contenant 100_atom , avec un nuage de points de 10 distribués en sphère avec une distance max = 6 comme limite de calcul entre 2 atomes : 
 
 $python3 src/main.py -p data/100_atom.pdb -n 10 -d 6
 
