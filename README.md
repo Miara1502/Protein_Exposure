@@ -44,13 +44,16 @@ Tout d'abord , il faudra cloner le répertoire git suivant :
 
 	$git clone https://github.com/Miara1502/Protein_Exposure.git
 
-ou le télécharger
+ou le télécharger , ensuite il va falloir ce placer dans le répértoire Protein_Exposure : 
 
-Pour Lancer le programme, utiliser la ligne de commande suivante:
+Pour Lancer le programme, utiliser la ligne de commande suivante avec les arguments de votre choix:
 
 	$python3 src/main.py -p data/pdb_file.pdb -n Nuage_de_point -d distance_limite
 
+
 ## Exemple d'usage : 
+### Conseil d'utilisation pour une visualisation rapide des résultats : 
+	faire tourner sur une petite protéine avec n = 10 (nuage de points pour chaque sphere)  
 
 Placez vous dans le répertoire Protein_Exposure et tapez la ligne de commande suivante pour lancer le programme sur un fichier pdb contenant 100_atom , avec un nuage de points de 10 distribués en sphère avec une distance max = 6 comme limite de calcul entre 2 atomes : 
 
