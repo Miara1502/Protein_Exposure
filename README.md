@@ -58,12 +58,4 @@ Placez vous dans le répertoire Protein_Exposure et tapez la lgne de commande su
 
 
  
-<<<<<<< HEAD
-=======
 
-
-
-
- 
-
->>>>>>> 39f80c6102a4f64b4439c43d680d6844d7355c0c
