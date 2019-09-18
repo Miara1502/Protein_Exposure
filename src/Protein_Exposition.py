@@ -99,7 +99,7 @@ def distance_all_atom(sphere , coord_dataframe):
     return dico_df
 
 
-def EXPOSITION(distance_dataframe , Atom):
+def EXPOSITION(distance_dataframe , Atom , seuil_distance):
     """Permet de calculer la surface exposé au solvant de l'atome
         - Calcul de la surface de l'atom
         - Calcul du ration exposé
@@ -117,9 +117,11 @@ def EXPOSITION(distance_dataframe , Atom):
     #2) Calcul du ratio exposé :  #Si DISTANCE > seuil => Point exposé
     count = 0
     seuil = 2.8 + rayon
+    limite = seuil_distance
     for i in range(len(distance_dataframe)):
         for j in range(len(distance_dataframe.iloc[i])):
-            if((distance_dataframe.iloc[i][j]) >= seuil):
+            if((distance_dataframe.iloc[i][j]) >= seuil and (distance_dataframe.iloc[i][j]) < limite ):
+            #FIXME : DEFINIR UNE LIMITE POUR NE PAS CONSIDERER TOUTES LES DISTANCES :
                 count = count + 1
     ratio = count/(distance_dataframe.shape[0]*distance_dataframe.shape[1])
 
@@ -138,7 +140,7 @@ def Surface(Atom) :
 
 
 
-def Exposition_All(coord_dataframe , nbr_point):
+def Exposition_All(coord_dataframe , nbr_point , seuil_distance):
 
     dico = {}
     list_surface = []
@@ -146,7 +148,7 @@ def Exposition_All(coord_dataframe , nbr_point):
         atom = coord_dataframe.iloc[atom_number]
         sphere = translocation(atom , nbr_point)
         distance_atom = distance_all_atom(sphere , coord_dataframe)
-        expo = EXPOSITION(distance_atom , atom)
+        expo = EXPOSITION(distance_atom , atom , seuil_distance)
         dico[atom_number] = expo
 
         s = Surface(coord_dataframe.iloc[atom_number])
